@@ -28,5 +28,7 @@ button:hover {
 
 input[type='file']:active,
 button:active {
-    box-shadow: 0 0 2mm darkslategrey;
+    box-shadow: 0 0 1mm darkslategrey;
+    padding: 1mm;
+    margin: 0.5mm;
 }
