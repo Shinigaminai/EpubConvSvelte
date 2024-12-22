@@ -1,0 +1,32 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+body {
+    background-color: lightsteelblue;
+}
+
+input[type='file'],
+button,
+.list {
+    border-radius: 1.5mm;
+    padding: 1.5mm;
+    background-color: darkslategrey;
+    color: aliceblue;
+    display: block;
+}
+
+input[type='file'],
+button {
+    cursor: pointer;
+}
+
+input[type='file']:hover,
+button:hover {
+    background-color: slategray;
+}
+
+input[type='file']:active,
+button:active {
+    box-shadow: 0 0 2mm darkslategrey;
+}
