@@ -1,17 +1,21 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	const authorizedExtension = ['.doc', '.docx', '.odt'];
-	let loading = false;
+
 	import MaterialSymbolsUploadRounded from '~icons/material-symbols/upload-rounded';
 	import LineMdLoadingTwotoneLoop from '~icons/line-md/loading-twotone-loop';
+
+	const authorizedExtension = ['.doc', '.docx', '.odt'];
+	let loading = $state(false);
 
 	function handleResponse(response: any) {
 		console.log('Server response');
 		console.log(response);
+		loading = false;
 	}
 
 	function sendToServer() {
 		console.log('Sending...');
+		loading = true;
 		return handleResponse;
 	}
 </script>
@@ -19,9 +23,8 @@
 <form
 	method="POST"
 	class="mb-2 flex flex-col gap-2 md:flex-row"
-	use:enhance={sendToServer()}
+	use:enhance={sendToServer}
 	enctype="multipart/form-data"
-	action="/upload"
 >
 	<input
 		class="block grow"
@@ -31,7 +34,7 @@
 		accept={authorizedExtension.join(',')}
 		required
 	/>
-	<button type="button" class="form-button flex items-center justify-center">
+	<button type="submit" class="form-button flex items-center justify-center">
 		{#if loading}
 			<LineMdLoadingTwotoneLoop />
 		{:else}
