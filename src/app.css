@@ -2,8 +2,29 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+html,
 body {
-    background-color: lightsteelblue;
+    --primary-color: darkslategrey;
+    --primary-text: rgb(31, 32, 41);
+    --primary-text-inv: bisque;
+    --primary-hover: slategray;
+    height: 100%;
+    color: var(--primary-text-inv);
+}
+
+body {
+    background-image: url('$lib/background.png');
+    background-size: cover;
+    background-blend-mode: soft-light;
+    background-color: rgb(66, 66, 66);
+}
+
+.box {
+    background-color: rgba(255, 241, 221, 0.6);
+    border: 1mm solid var(--primary-color);
+    border-radius: 2mm;
+    backdrop-filter: blur(2mm);
+    color: var(--primary-text);
 }
 
 input[type='file'],
@@ -11,8 +32,8 @@ button,
 .list {
     border-radius: 1.5mm;
     padding: 1.5mm;
-    background-color: darkslategrey;
-    color: aliceblue;
+    background-color: var(--primary-color);
+    color: var(--primary-text-inv);
     display: block;
 }
 
@@ -23,12 +44,12 @@ button {
 
 input[type='file']:hover,
 button:hover {
-    background-color: slategray;
+    background-color: var(--primary-hover);
 }
 
 input[type='file']:active,
 button:active {
-    box-shadow: 0 0 1mm darkslategrey;
+    box-shadow: 0 0 1mm var(--primary-color);
     padding: 1mm;
     margin: 0.5mm;
 }

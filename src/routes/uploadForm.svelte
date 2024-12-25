@@ -4,13 +4,24 @@
 	let loading = false;
 	import MaterialSymbolsUploadRounded from '~icons/material-symbols/upload-rounded';
 	import LineMdLoadingTwotoneLoop from '~icons/line-md/loading-twotone-loop';
+
+	function handleResponse(response: any) {
+		console.log('Server response');
+		console.log(response);
+	}
+
+	function sendToServer() {
+		console.log('Sending...');
+		return handleResponse;
+	}
 </script>
 
 <form
-	method="post"
+	method="POST"
 	class="mb-2 flex flex-col gap-2 md:flex-row"
-	use:enhance={() => {}}
+	use:enhance={sendToServer()}
 	enctype="multipart/form-data"
+	action="/upload"
 >
 	<input
 		class="block grow"

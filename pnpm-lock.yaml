@@ -27,6 +27,9 @@ importers:
       '@iconify-json/material-symbols':
         specifier: ^1.2.7
         version: 1.2.7
+      '@iconify-json/mdi':
+        specifier: ^1.2.1
+        version: 1.2.1
       '@iconify/svelte':
         specifier: ^4.1.0
         version: 4.1.0(svelte@5.11.0)
@@ -319,6 +322,9 @@ packages:
 
   '@iconify-json/material-symbols@1.2.7':
     resolution: {integrity: sha512-3zJ0vv20YfrmI1sFcWTRXWY23+qqTo/WNHm7k1yqbTneSS7yfQakUQjEB05S9YNzu6KODeJ+xHCgcq6RkGn6jg==}
+
+  '@iconify-json/mdi@1.2.1':
+    resolution: {integrity: sha512-dSkQU78gsZV6Yxnq78+LuX7jzeFC/5NAmz7O3rh558GimGFcwMVY/OtqRowIzjqJBmMmWZft7wkFV4TrwRXjlg==}
 
   '@iconify/svelte@4.1.0':
     resolution: {integrity: sha512-6oLonIDZHXPcQa9ZKbJocaOUMOV+ALeGPVDfex/lwdlHRNUxtJzI6pu121SaoVoXpRGSAYXB/VCv/MuYzCjn5w==}
@@ -1828,6 +1834,10 @@ snapshots:
       '@iconify/types': 2.0.0
 
   '@iconify-json/material-symbols@1.2.7':
+    dependencies:
+      '@iconify/types': 2.0.0
+
+  '@iconify-json/mdi@1.2.1':
     dependencies:
       '@iconify/types': 2.0.0
 
