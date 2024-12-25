@@ -1,6 +1,8 @@
-const dirPath = 'static/converted'; // replace with your folder path
-import { readdirSync, readFileSync, writeFile } from 'fs';
+import { readdirSync, readFileSync, writeFileSync } from 'fs';
 import { join } from 'path';
+
+const dirConvertedPath = 'static/converted'; // replace with your folder path
+const dirTempPath = 'static/tmp';
 
 function sleep(ms: number) {
     return new Promise((resolve) => {
@@ -8,24 +10,17 @@ function sleep(ms: number) {
     });
 }
 
-export function getDocuments() {
-    let files = readdirSync(dirPath)
+export function getConvertedDocuments() {
+    let files = readdirSync(dirConvertedPath)
     return files;
 }
 
 export function getEpub(name: string) {
     // TODO check extension
-    return readFileSync(join(dirPath, name));
+    return readFileSync(join(dirConvertedPath, name));
 }
 
-export async function addDocument(fileToUpload: File) {
-    // Write the file to the static folder
-    return writeFile(`static/${fileToUpload.name}`, Buffer.from(await fileToUpload.arrayBuffer()), (err) => {
-        if (err) throw err;
-        console.log('The file has been saved!');
-    });
-}
-
-export async function convertAdd(file: File) {
-    await sleep(1000);
+export async function convertAndAddDocument(file: File) {
+    writeFileSync(join(dirTempPath, file.name), Buffer.from(await file.arrayBuffer()))
+    console.log('The file has been saved temporarily');
 }

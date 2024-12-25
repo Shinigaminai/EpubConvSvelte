@@ -1,29 +1,28 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
-
+	import { applyAction, enhance } from '$app/forms';
 	import MaterialSymbolsUploadRounded from '~icons/material-symbols/upload-rounded';
 	import LineMdLoadingTwotoneLoop from '~icons/line-md/loading-twotone-loop';
+	import { goto } from '$app/navigation';
 
 	const authorizedExtension = ['.doc', '.docx', '.odt'];
 	let loading = $state(false);
-
-	function handleResponse(response: any) {
-		console.log('Server response');
-		console.log(response);
-		loading = false;
-	}
-
-	function sendToServer() {
-		console.log('Sending...');
-		loading = true;
-		return handleResponse;
-	}
 </script>
 
 <form
 	method="POST"
 	class="mb-2 flex flex-col gap-2 md:flex-row"
-	use:enhance={sendToServer}
+	use:enhance={({ formElement, formData, action, cancel }) => {
+		loading = true;
+		return async ({ result }) => {
+			loading = false;
+			// `result` is an `ActionResult` object
+			if (result.type === 'redirect') {
+				goto(result.location);
+			} else {
+				await applyAction(result);
+			}
+		};
+	}}
 	enctype="multipart/form-data"
 >
 	<input

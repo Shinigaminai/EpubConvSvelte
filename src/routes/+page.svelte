@@ -1,13 +1,13 @@
 <script lang="ts">
-	import type { PageData } from './$types';
+	import type { PageData, ActionData } from './$types';
 	import UploadForm from './uploadForm.svelte';
-	let { data }: { data: PageData } = $props();
-	import LineMdLoadingTwotoneLoop from '~icons/line-md/loading-twotone-loop';
 	import MdiFileWord from '~icons/mdi/file-word';
-	import MdiBookshelf from '~icons/mdi/bookshelf';
 	import MdiBook from '~icons/mdi/book';
 	import MdiScriptText from '~icons/mdi/script-text';
 	import MdiArrowRightBold from '~icons/mdi/arrow-right-bold';
+	import DocumentList from './documentList.svelte';
+
+	let { data, form }: { data: PageData; form: ActionData } = $props();
 </script>
 
 <div class="flex h-full flex-col items-center justify-start p-4">
@@ -18,29 +18,19 @@
 		<MdiBook />
 	</div>
 	<div class="max-w-lr box p-4">
-		<h1 class="mb-2 text-xl">Epub Conversion</h1>
-		<p>Lade ein Libre Office Text oder Word Dokument hoch und lasse es zu epub konvertieren.</p>
+		<h1 class="mb-2 text-xl">EPUB Konvertierer</h1>
+		<p>
+			Lade ein Libre Office Text, Word Dokument oder PDF Dokument hoch und lasse es zu EPUB
+			konvertieren.
+		</p>
 
 		<UploadForm></UploadForm>
-		<div class="flex items-center">
-			<MdiBookshelf />
-			<h2>Konvertierte Dokumente</h2>
-		</div>
-		<div class="list mb-2 w-full">
-			{#await data.documents}
-				<LineMdLoadingTwotoneLoop />
-				Laden...
-			{:then documents}
-				{#if documents != undefined && documents.length >= 1}
-					{#each documents as document}
-						<a target="_blank" href="/download/{document}">{document}</a>
-					{/each}
-				{:else}
-					<p>Keine Dokumente gefunden</p>
-				{/if}
-			{:catch error}
-				<p>Fehler beim Laden: {error.message}</p>
-			{/await}
-		</div>
+		{#if form?.error}
+			<div class="errorbox mb-2">
+				<p>{form.message}</p>
+			</div>
+		{/if}
+
+		<DocumentList documents={data.documents}></DocumentList>
 	</div>
 </div>
