@@ -8,6 +8,12 @@
 	import DocumentList from './documentList.svelte';
 
 	let { data, form }: { data: PageData; form: ActionData } = $props();
+
+	// let updateDocumentList = () => {
+	// 	fetch('/download').then((result) => {
+	// 		console.log(result.json());
+	// 	});
+	// };
 </script>
 
 <div class="flex h-full flex-col items-center justify-start p-4">

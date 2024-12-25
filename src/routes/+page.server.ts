@@ -3,7 +3,7 @@ import { fail, type Actions } from '@sveltejs/kit';
 import * as epubconv from '$lib/epubConv';
 
 export const load: PageServerLoad = async () => {
-    console.log("Load documents")
+    console.log("Load documents");
     return {
         documents: epubconv.getConvertedDocuments(),
     };

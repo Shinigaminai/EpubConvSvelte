@@ -2,10 +2,11 @@
 	import { applyAction, enhance } from '$app/forms';
 	import MaterialSymbolsUploadRounded from '~icons/material-symbols/upload-rounded';
 	import LineMdLoadingTwotoneLoop from '~icons/line-md/loading-twotone-loop';
-	import { goto } from '$app/navigation';
+	import { goto, invalidateAll } from '$app/navigation';
 
 	const authorizedExtension = ['.doc', '.docx', '.odt'];
 	let loading = $state(false);
+	// let callback: Function = $props();
 </script>
 
 <form
@@ -20,6 +21,8 @@
 				goto(result.location);
 			} else {
 				await applyAction(result);
+				console.log('reload all data');
+				invalidateAll();
 			}
 		};
 	}}
