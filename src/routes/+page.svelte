@@ -33,7 +33,7 @@
 			{:then documents}
 				{#if documents != undefined && documents.length >= 1}
 					{#each documents as document}
-						<p>{document}</p>
+						<a target="_blank" href="/download/{document}">{document}</a>
 					{/each}
 				{:else}
 					<p>Keine Dokumente gefunden</p>
