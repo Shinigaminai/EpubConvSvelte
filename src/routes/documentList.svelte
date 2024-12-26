@@ -15,9 +15,11 @@
 		Laden...
 	{:then documents}
 		{#if documents != undefined && documents.length >= 1}
-			{#each documents as document}
-				<a target="_blank" href="/download/{document}">{document}</a>
-			{/each}
+			<div class="flex flex-col">
+				{#each documents as document}
+					<a target="_blank" href="/download/{document}">{document}</a>
+				{/each}
+			</div>
 		{:else}
 			<p>Keine Dokumente gefunden</p>
 		{/if}
