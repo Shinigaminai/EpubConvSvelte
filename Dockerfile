@@ -18,6 +18,10 @@ RUN pnpm build
 FROM node:20.10-bookworm-slim
 
 WORKDIR /app
+RUN mkdir uploadbox
+RUN mkdir uploadbox/tmp
+RUN mkdir uploadbox/converted
+
 COPY --from=build /app .
 # ENV HOST is not though you can uncomment if if needed
 # ENV HOST=0.0.0.0
