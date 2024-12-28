@@ -1,0 +1,19 @@
+version: "3"
+services:
+  EpubConv:
+    build: .
+    pull_policy: build
+    restart: unless-stopped
+    networks:
+      - traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik"
+      - "traefik.http.routers.epubconv.entrypoints=websecure"
+      - "traefik.http.routers.epubconv.rule=Host(`epub.datapi.kreis`)"
+      - "traefik.http.routers.epubconv.tls=true"
+
+networks:
+  traefik:
+    name: traefik
+    external: true
