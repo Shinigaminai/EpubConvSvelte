@@ -1,13 +1,39 @@
-import { readdirSync, readFileSync, writeFileSync } from 'fs';
+import { readdirSync, readFileSync, writeFileSync, rm } from 'fs';
 import { join } from 'path';
+import { execSync } from 'child_process';
 
 const dirConvertedPath = 'uploadbox/converted'; // replace with your folder path
 const dirTempPath = 'uploadbox/tmp';
+const allowedFiletypes = ['application/vnd.oasis.opendocument.text', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/msword', 'application/rtf']
+
+try {
+    let version = execSync('flatpak --command="sh" run com.calibre_ebook.calibre -c "ebook-convert --version"').toString();
+    console.log(version);
+    version.includes('ebook-convert');
+} catch {
+    console.log(
+        'Please install ebook-convert tool on your machine via flatpak.',
+    );
+    process.exit(1);
+}
 
 function sleep(ms: number) {
     return new Promise((resolve) => {
         setTimeout(resolve, ms);
     });
+}
+
+function getTargetName(file: File, extension = '.epub') {
+    return file.name.replace(/\b\.\w*$/, '') + '.epub';
+}
+
+function createConvCommand(file: File) {
+    // TODO replace all possible filetypes
+    const epubFile = getTargetName(file);
+    // TODO sanitize
+    const target = join(dirTempPath, file.name);
+    const output = join(dirConvertedPath, epubFile);
+    return `flatpak --command="sh" run com.calibre_ebook.calibre -c "ebook-convert ${target} ${output}"`;
 }
 
 export function getConvertedDocuments() {
@@ -16,11 +42,16 @@ export function getConvertedDocuments() {
 }
 
 export function getEpub(name: string) {
-    // TODO check extension
+    // TODO check extension and sanitize
     return readFileSync(join(dirConvertedPath, name));
 }
 
 export async function convertAndAddDocument(file: File) {
-    writeFileSync(join(dirConvertedPath, file.name), Buffer.from(await file.arrayBuffer()))
-    console.log('The file has been saved temporarily');
+    if (!allowedFiletypes.includes(file.type)) throw new Error(`Dateityp ${file.type} ist nicht erlaubt.`);
+
+    let tmpFilePath = join(dirTempPath, file.name);
+    writeFileSync(tmpFilePath, Buffer.from(await file.arrayBuffer()));
+    execSync(createConvCommand(file));
+    rm(tmpFilePath, () => { }) //console.log('removed tmp file') })
+    console.log(`Converted ${file.name} -> ${getTargetName(file)}`)
 }
