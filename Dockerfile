@@ -10,7 +10,7 @@ COPY pnpm-lock.yaml ./
 
 # pnpm must be installed as it doesn't come with the default image
 RUN npm i -g pnpm
-RUN pnpm install --force
+RUN pnpm i
 COPY . ./
 
 RUN pnpm build
