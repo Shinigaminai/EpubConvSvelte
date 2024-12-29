@@ -12,8 +12,7 @@ COPY pnpm-lock.yaml ./
 RUN npm i -g pnpm
 COPY . ./
 
-RUN pnpm i
-RUN pnpm build
+RUN pnpm i && pnpm build
 
 FROM node:bookworm-slim
 
