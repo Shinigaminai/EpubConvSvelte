@@ -12,9 +12,6 @@ services:
       - "traefik.http.routers.epubconv.entrypoints=websecure"
       - "traefik.http.routers.epubconv.rule=Host(`epub.datapi.kreis`)"
       - "traefik.http.routers.epubconv.tls=true"
-    volumes:
-      - .:/usr/src/app
-      - /usr/src/app/node_modules
 
 networks:
   traefik:
