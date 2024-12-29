@@ -1,5 +1,5 @@
 # bookworm images are more secure compared to alpine
-FROM node:bookworm-slim as build
+FROM node:slim as build
 
 ENV NODE_ENV=production 
 
@@ -9,12 +9,12 @@ COPY package.json ./
 COPY pnpm-lock.yaml ./
 
 # pnpm must be installed as it doesn't come with the default image
-RUN npm i -g pnpm
 COPY . ./
 
-RUN pnpm i && pnpm build
+RUN pnpm i
+RUN pnpm build
 
-FROM node:bookworm-slim
+FROM node:slim
 
 WORKDIR /usr/src/app
 # install conversion utils
