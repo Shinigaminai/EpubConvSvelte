@@ -1,5 +1,5 @@
 # bookworm images are more secure compared to alpine
-FROM node:20.10-bookworm-slim as build
+FROM node:bookworm-slim as build
 
 ENV NODE_ENV=production 
 
@@ -15,7 +15,7 @@ COPY . ./
 
 RUN pnpm build
 
-FROM node:20.10-bookworm-slim
+FROM node:bookworm-slim
 
 WORKDIR /app
 # install conversion utils
