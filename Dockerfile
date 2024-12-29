@@ -18,9 +18,12 @@ RUN pnpm build
 FROM node:20.10-bookworm-slim
 
 WORKDIR /app
+# install conversion utils
 RUN mkdir uploadbox
 RUN mkdir uploadbox/tmp
 RUN mkdir uploadbox/converted
+RUN apt install flatpak
+RUN flatpak install com.calibre_ebook.calibre
 
 COPY --from=build /app .
 # ENV HOST is not though you can uncomment if if needed
