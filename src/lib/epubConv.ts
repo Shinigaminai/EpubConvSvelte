@@ -2,7 +2,7 @@ import { readdirSync, readFileSync, writeFileSync, rm } from 'fs';
 import { join } from 'path';
 import { execSync } from 'child_process';
 
-const dirConvertedPath = 'uploadbox/converted'; // replace with your folder path
+const dirConvertedPath = 'uploadbox/converted';
 const dirTempPath = 'uploadbox/tmp';
 const allowedFiletypes = ['application/vnd.oasis.opendocument.text', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/msword', 'application/rtf']
 

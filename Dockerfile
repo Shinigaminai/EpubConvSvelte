@@ -21,6 +21,7 @@ RUN pnpm build
 FROM base
 
 WORKDIR /app
+COPY package.json /app/
 COPY --from=deps /app/node_modules /app/node_modules
 COPY --from=build /app/build /app/build
 ENV NODE_ENV production
