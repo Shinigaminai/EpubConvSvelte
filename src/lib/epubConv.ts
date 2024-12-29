@@ -6,17 +6,6 @@ const dirConvertedPath = 'uploadbox/converted'; // replace with your folder path
 const dirTempPath = 'uploadbox/tmp';
 const allowedFiletypes = ['application/vnd.oasis.opendocument.text', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/msword', 'application/rtf']
 
-try {
-    let version = execSync('flatpak --command="sh" run com.calibre_ebook.calibre -c "ebook-convert --version"').toString();
-    console.log(version);
-    version.includes('ebook-convert');
-} catch {
-    console.log(
-        'Please install ebook-convert tool on your machine via flatpak.',
-    );
-    process.exit(1);
-}
-
 function sleep(ms: number) {
     return new Promise((resolve) => {
         setTimeout(resolve, ms);
@@ -33,7 +22,8 @@ function createConvCommand(file: File) {
     // TODO sanitize
     const target = join(dirTempPath, file.name);
     const output = join(dirConvertedPath, epubFile);
-    return `flatpak --command="sh" run com.calibre_ebook.calibre -c "ebook-convert ${target} ${output}"`;
+    // return `flatpak --command="sh" run com.calibre_ebook.calibre -c "ebook-convert ${target} ${output}"`;
+    return `ebook-convert ${target} ${output}`;
 }
 
 export function getConvertedDocuments() {

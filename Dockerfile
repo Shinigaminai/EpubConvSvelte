@@ -22,8 +22,8 @@ WORKDIR /app
 RUN mkdir uploadbox
 RUN mkdir uploadbox/tmp
 RUN mkdir uploadbox/converted
-RUN apt install flatpak
-RUN flatpak install com.calibre_ebook.calibre
+RUN apt update
+RUN apt install -y calibre
 
 COPY --from=build /app .
 # ENV HOST is not though you can uncomment if if needed
