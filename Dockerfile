@@ -10,9 +10,9 @@ COPY pnpm-lock.yaml ./
 
 # pnpm must be installed as it doesn't come with the default image
 RUN npm i -g pnpm
-COPY . ./
-
 RUN pnpm i
+
+COPY . ./
 RUN pnpm build
 
 FROM node:slim
@@ -26,8 +26,6 @@ RUN apt update
 RUN apt install -y calibre
 
 COPY --from=build /usr/src/app .
-# ENV HOST is not though you can uncomment if if needed
-# ENV HOST=0.0.0.0
-EXPOSE 4173
+EXPOSE 3000
 
 CMD ["node","build"]
