@@ -1,23 +1,30 @@
-# bookworm images are more secure compared to alpine
-FROM node:slim as build
+FROM node:20 AS base
 
-ENV NODE_ENV=production 
+FROM base AS deps
 
-WORKDIR /usr/src/app
+RUN corepack enable
+WORKDIR /app
+COPY package.json pnpm-lock.yaml ./
+RUN --mount=type=cache,id=pnpm,target=/root/.local/share/pnpm/store pnpm fetch --frozen-lockfile
+RUN --mount=type=cache,id=pnpm,target=/root/.local/share/pnpm/store pnpm install --frozen-lockfile --prod
 
-COPY package.json ./
-COPY pnpm-lock.yaml ./
+FROM base AS build
 
-# pnpm must be installed as it doesn't come with the default image
-RUN npm i -g pnpm
-RUN pnpm i
-
-COPY . ./
+RUN corepack enable
+WORKDIR /app
+COPY package.json pnpm-lock.yaml ./
+RUN --mount=type=cache,id=pnpm,target=/root/.local/share/pnpm/store pnpm fetch --frozen-lockfile
+RUN --mount=type=cache,id=pnpm,target=/root/.local/share/pnpm/store pnpm install --frozen-lockfile
+COPY . .
 RUN pnpm build
 
-FROM node:slim
+FROM base
 
-WORKDIR /usr/src/app
+WORKDIR /app
+COPY --from=deps /app/node_modules /app/node_modules
+COPY --from=build /app/build /app/build
+ENV NODE_ENV production
+
 # install conversion utils
 RUN mkdir uploadbox
 RUN mkdir uploadbox/tmp
@@ -25,7 +32,5 @@ RUN mkdir uploadbox/converted
 RUN apt update
 RUN apt install -y calibre
 
-COPY --from=build /usr/src/app .
 EXPOSE 3000
-
-CMD ["node","build"]
+CMD ["node", "build"]
