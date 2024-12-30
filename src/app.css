@@ -13,7 +13,7 @@ body {
 }
 
 body {
-    background-image: url('$lib/background.png');
+    background-image: url('$lib/background.jpg');
     background-size: cover;
     background-blend-mode: soft-light;
     background-color: rgb(66, 66, 66);
