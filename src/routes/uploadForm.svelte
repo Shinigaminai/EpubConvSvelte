@@ -3,6 +3,9 @@
 	import MaterialSymbolsUploadRounded from '~icons/material-symbols/upload-rounded';
 	import LineMdLoadingTwotoneLoop from '~icons/line-md/loading-twotone-loop';
 	import { goto, invalidateAll } from '$app/navigation';
+	import MaterialSymbolsAccountCircle from '~icons/material-symbols/account-circle';
+
+	import ImageUpload from './imageUpload.svelte';
 
 	const authorizedExtension = ['.doc', '.docx', '.odt', '.pdf', '.rtf'];
 	let loading = $state(false);
@@ -11,7 +14,7 @@
 
 <form
 	method="POST"
-	class="mb-2 flex flex-col gap-2 md:flex-row"
+	class="mb-2"
 	use:enhance={({ formElement, formData, action, cancel }) => {
 		loading = true;
 		return async ({ result }) => {
@@ -28,20 +31,34 @@
 	}}
 	enctype="multipart/form-data"
 >
-	<input
-		class="block grow"
-		id="file_input"
-		type="file"
-		name="fileToUpload"
-		accept={authorizedExtension.join(',')}
-		required
-	/>
-	<button type="submit" class="form-button flex items-center justify-center">
-		{#if loading}
-			<LineMdLoadingTwotoneLoop />
-		{:else}
-			<MaterialSymbolsUploadRounded />
-		{/if}
-		Konvertieren
-	</button>
+	<div class="mb-2 flex flex-col flex-nowrap gap-2 md:flex-row">
+		<ImageUpload></ImageUpload>
+		<div class="inputbox flex grow flex-col gap-2">
+			<div>
+				<label for="author" class="flex flex-nowrap items-center">
+					<MaterialSymbolsAccountCircle></MaterialSymbolsAccountCircle>
+					<div class="mx-1">Autor</div>
+				</label>
+				<input type="text" name="author" id="author" />
+			</div>
+		</div>
+	</div>
+	<div class="flex flex-col gap-2 md:flex-row">
+		<input
+			class="block grow"
+			id="file_input"
+			type="file"
+			name="fileToUpload"
+			accept={authorizedExtension.join(',')}
+			required
+		/>
+		<button type="submit" class="form-button flex items-center justify-center">
+			{#if loading}
+				<LineMdLoadingTwotoneLoop />
+			{:else}
+				<MaterialSymbolsUploadRounded />
+			{/if}
+			Konvertieren
+		</button>
+	</div>
 </form>

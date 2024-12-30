@@ -34,6 +34,7 @@ body {
     border: 1mm solid red;
 }
 
+.inputbox,
 input[type='file'],
 button,
 .list {
@@ -41,7 +42,12 @@ button,
     padding: 1.5mm;
     background-color: var(--primary-color);
     color: var(--primary-text-inv);
-    display: block;
+}
+
+input[type='text'] {
+    border-radius: 1.5mm;
+    background-color: rgba(53, 38, 7, 0.6);
+    width: 100%;
 }
 
 input[type='file'],
