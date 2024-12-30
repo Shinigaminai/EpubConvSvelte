@@ -25,10 +25,7 @@
 	</div>
 	<div class="max-w-lr box p-4">
 		<h1 class="mb-2 text-xl">EPUB Konvertierer</h1>
-		<p>
-			Lade ein Libre Office Text, Word Dokument oder PDF Dokument hoch und lasse es zu EPUB
-			konvertieren.
-		</p>
+		<p>Lade ein Text, Word Dokument oder PDF Dokument hoch und lasse es zu EPUB konvertieren.</p>
 
 		<UploadForm></UploadForm>
 		{#if form?.error}

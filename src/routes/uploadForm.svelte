@@ -4,7 +4,7 @@
 	import LineMdLoadingTwotoneLoop from '~icons/line-md/loading-twotone-loop';
 	import { goto, invalidateAll } from '$app/navigation';
 
-	const authorizedExtension = ['.doc', '.docx', '.odt'];
+	const authorizedExtension = ['.doc', '.docx', '.odt', '.pdf', '.rtf'];
 	let loading = $state(false);
 	// let callback: Function = $props();
 </script>

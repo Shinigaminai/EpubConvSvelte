@@ -4,7 +4,14 @@ import { execSync } from 'child_process';
 
 const dirConvertedPath = 'uploadbox/converted';
 const dirTempPath = 'uploadbox/tmp';
-const allowedFiletypes = ['application/vnd.oasis.opendocument.text', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/msword', 'application/rtf']
+const allowedFiletypes = [
+    'application/pdf',
+    'application/vnd.oasis.opendocument.text',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    'application/msword',
+    'application/rtf',
+    'text/rtf'
+]
 
 function sleep(ms: number) {
     return new Promise((resolve) => {
