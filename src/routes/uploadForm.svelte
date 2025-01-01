@@ -3,9 +3,12 @@
 	import MaterialSymbolsUploadRounded from '~icons/material-symbols/upload-rounded';
 	import LineMdLoadingTwotoneLoop from '~icons/line-md/loading-twotone-loop';
 	import { goto, invalidateAll } from '$app/navigation';
+
+	import MaterialSymbolsTitle from '~icons/material-symbols/title';
 	import MaterialSymbolsAccountCircle from '~icons/material-symbols/account-circle';
 
 	import ImageUpload from './imageUpload.svelte';
+	import Help from '$lib/help.svelte';
 
 	const authorizedExtension = ['.doc', '.docx', '.odt', '.pdf', '.rtf'];
 	let loading = $state(false);
@@ -35,9 +38,17 @@
 		<ImageUpload></ImageUpload>
 		<div class="inputbox flex grow flex-col gap-2">
 			<div>
+				<label for="title" class="flex flex-nowrap items-center">
+					<MaterialSymbolsTitle></MaterialSymbolsTitle>
+					<div class="mx-1">Titel</div>
+				</label>
+				<input type="text" name="title" id="title" />
+			</div>
+			<div>
 				<label for="author" class="flex flex-nowrap items-center">
 					<MaterialSymbolsAccountCircle></MaterialSymbolsAccountCircle>
-					<div class="mx-1">Autor</div>
+					<div class="mx-1">Autor(en)</div>
+					<Help>Mehrere Autoren mit einem Semikolon trennen.</Help>
 				</label>
 				<input type="text" name="author" id="author" />
 			</div>
