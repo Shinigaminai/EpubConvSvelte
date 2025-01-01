@@ -41,8 +41,9 @@
 				<label for="title" class="flex flex-nowrap items-center">
 					<MaterialSymbolsTitle></MaterialSymbolsTitle>
 					<div class="mx-1">Titel</div>
+					<Help>Auto: Titel basierend auf Dateinamen generieren.</Help>
 				</label>
-				<input type="text" name="title" id="title" />
+				<input type="text" name="title" id="title" placeholder="auto" />
 			</div>
 			<div>
 				<label for="author" class="flex flex-nowrap items-center">
@@ -50,7 +51,7 @@
 					<div class="mx-1">Autor(en)</div>
 					<Help>Mehrere Autoren mit einem Semikolon trennen.</Help>
 				</label>
-				<input type="text" name="author" id="author" />
+				<input type="text" name="author" id="author" placeholder="unkown" />
 			</div>
 		</div>
 	</div>

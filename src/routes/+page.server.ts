@@ -13,6 +13,11 @@ export const actions = {
     default: async ({ request }) => {
         const formData = Object.fromEntries(await request.formData());
         let file = (formData.fileToUpload as File)
+        let title = (formData.title as string)
+        let author = (formData.author as string)
+        let cover = (formData.cover as File)
+        let metadata: epubconv.metadata = { 'author': author, 'title': title }
+
         if (!file.name || file.name === 'undefined') {
             return fail(400, {
                 error: true,
@@ -20,10 +25,12 @@ export const actions = {
             });
         }
 
-        console.log("recieved file to convert: " + file.name)
+        // console.log("recieved file to convert: " + file.name)
+        // console.log("and author " + author + " and title " + title)
+        // console.log("cover name: " + cover?.name);
 
         try {
-            await epubconv.convertAndAddDocument(file);
+            await epubconv.convertAndAddDocument(file, metadata, cover);
         } catch (err) {
             console.log(err);
             if (err instanceof Error) {
@@ -31,8 +38,6 @@ export const actions = {
             }
             return fail(400, { error: true, message: "server side error" });
         }
-
-        console.log("converted")
 
         return {
             success: true

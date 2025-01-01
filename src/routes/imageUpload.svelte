@@ -22,11 +22,13 @@
 		{#if customCover}
 			<img id="cover" src={customCover} alt="custom cover" />
 		{:else}
-			<img id="cover" src={cover_img} alt="cover" />
+			<img id="cover" class="blur-sm brightness-50" src={cover_img} alt="cover" />
+			<div class="absolute inset-0 content-center">automatisch erkennen</div>
 		{/if}
 		<input
 			class="hidden"
 			id="customCoverUpload"
+			name="cover"
 			type="file"
 			accept=".png,.jpg"
 			bind:this={fileInput}
@@ -52,10 +54,6 @@
 	.upload-btn {
 		position: relative;
 		overflow: hidden;
-	}
-
-	.upload-btn:hover > #cover {
-		filter: blur(2mm);
 	}
 
 	.edit {
