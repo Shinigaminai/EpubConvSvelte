@@ -20,5 +20,6 @@
 		background-color: rgba(53, 38, 7, 0.6);
 		border-radius: 1.5mm;
 		backdrop-filter: blur(1.5mm);
+		z-index: 1;
 	}
 </style>
