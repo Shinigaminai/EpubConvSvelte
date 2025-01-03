@@ -15,7 +15,7 @@ export const actions = {
         let file = (formData.fileToUpload as File)
         let title = (formData.title as string)
         let author = (formData.author as string)
-        let cover = (formData.cover as File)
+        let cover = (formData.cover as File | undefined)
         let metadata: epubconv.metadata = { 'author': author, 'title': title }
 
         if (!file.name || file.name === 'undefined') {
@@ -23,6 +23,9 @@ export const actions = {
                 error: true,
                 message: 'You must provide a file to upload'
             });
+        }
+        if (!cover?.name || cover.name === 'undefined') {
+            cover = undefined;
         }
 
         // console.log("recieved file to convert: " + file.name)

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import cover_img from '$lib/cover.webp';
-	import MaterialSymbolsUploadRounded from '~icons/material-symbols/upload-rounded';
+	import IconUpload from '~icons/material-symbols/upload-rounded';
+	import IconDelete from '~icons/mdi/delete-outline';
 
 	let fileInput: HTMLInputElement;
 	let files: FileList;
@@ -15,30 +16,42 @@
 			}
 		};
 	}
+
+	function clearImage() {
+		customCover = '';
+		fileInput.value = '';
+	}
 </script>
 
-<div class="align-center flex flex-row">
-	<button class="upload-btn" on:click={() => fileInput.click()}>
-		{#if customCover}
+<div class="align-center flex flex-row justify-center">
+	<input
+		class="hidden"
+		id="customCoverUpload"
+		name="cover"
+		type="file"
+		accept=".png,.jpg"
+		bind:this={fileInput}
+		bind:files
+		on:change={() => getBase64(files[0])}
+	/>
+	{#if customCover}
+		<button class="upload-btn" on:click={() => clearImage()}>
 			<img id="cover" src={customCover} alt="custom cover" />
-		{:else}
+			<div class="edit p-2">
+				<IconDelete></IconDelete>
+			</div>
+		</button>
+	{:else}
+		<button class="upload-btn" on:click={() => fileInput.click()}>
 			<img id="cover" class="blur-sm brightness-50" src={cover_img} alt="cover" />
-			<div class="absolute inset-0 content-center">automatisch erkennen</div>
-		{/if}
-		<input
-			class="hidden"
-			id="customCoverUpload"
-			name="cover"
-			type="file"
-			accept=".png,.jpg"
-			bind:this={fileInput}
-			bind:files
-			on:change={() => getBase64(files[0])}
-		/>
-		<div class="edit p-2">
-			<MaterialSymbolsUploadRounded></MaterialSymbolsUploadRounded>
-		</div>
-	</button>
+			<div class="absolute inset-0 content-center p-4">
+				Cover automatisch erkennen oder generieren.
+			</div>
+			<div class="edit p-2">
+				<IconUpload></IconUpload>
+			</div>
+		</button>
+	{/if}
 </div>
 
 <style>

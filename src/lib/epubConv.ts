@@ -1,4 +1,4 @@
-import { readdirSync, readFileSync, writeFileSync, rm } from 'fs';
+import { readdirSync, readFileSync, writeFileSync, rm, unlink, readdir } from 'fs';
 import { join } from 'path';
 import { execSync } from 'child_process';
 
@@ -26,6 +26,18 @@ function sleep(ms: number) {
     });
 }
 
+function clear(directory: string) {
+    readdir(directory, (err, files) => {
+        if (err) throw err;
+
+        for (const file of files) {
+            unlink(join(directory, file), (err) => {
+                if (err) throw err;
+            });
+        }
+    });
+}
+
 function getTargetName(file: File, extension = '.epub') {
     return file.name.replace(/\b\.\w*$/, '') + '.epub';
 }
@@ -40,8 +52,8 @@ function createConvCommand(file: File, metadata: metadata) {
     metadataFlags += metadata.author ? `--authors ${metadata.author} ` : '';
     metadataFlags += metadata.title ? `--title ${metadata.title}` : '';
     // --no-default-epub-cover¶
-    // return `flatpak --command="sh" run com.calibre_ebook.calibre -c "ebook-convert ${target} ${output} ${metadataFlags}"`;
-    return `ebook-convert ${target} ${output}`;
+    // return `flatpak --command="sh" run com.calibre_ebook.calibre -c "ebook-convert \\\"${target}\\\" \\\"${output}\\\" ${metadataFlags}"`;
+    return `ebook-convert "${target}" "${output}"`;
 }
 
 export function getConvertedDocuments() {
@@ -64,8 +76,9 @@ export async function convertAndAddDocument(file: File, metadata: metadata, cove
     let tmpFilePath = join(dirTempPath, file.name);
     writeFileSync(tmpFilePath, Buffer.from(await file.arrayBuffer()));
     let command = createConvCommand(file, metadata);
-    // console.log(command);
+    console.log(command);
     execSync(command);
-    rm(tmpFilePath, () => { }) //console.log('removed tmp file') })
-    console.log(`Converted ${file.name} -> ${getTargetName(file)}`)
+    clear(dirTempPath);
+    rm(tmpCoverPath, () => { });
+    console.log(`Converted ${file.name} -> ${getTargetName(file)}`);
 }
