@@ -16,8 +16,8 @@
 	// };
 </script>
 
-<div class="flex h-full flex-col items-center justify-start p-4">
-	<div class="flex p-2">
+<div class="flex h-full flex-col justify-start p-4">
+	<div class="flex justify-center p-2">
 		<MdiFileWord />
 		<MdiScriptText />
 		<MdiArrowRightBold />

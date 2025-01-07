@@ -34,7 +34,7 @@
 	}}
 	enctype="multipart/form-data"
 >
-	<div class="mb-2 flex flex-col flex-nowrap gap-2 md:flex-row">
+	<div class="mb-2 flex flex-row flex-wrap justify-center gap-2">
 		<ImageUpload></ImageUpload>
 		<div class="inputbox flex grow flex-col gap-2">
 			<div>

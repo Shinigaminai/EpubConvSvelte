@@ -17,6 +17,8 @@ body {
     background-size: cover;
     background-blend-mode: soft-light;
     background-color: rgb(66, 66, 66);
+    background-position: center;
+    background-attachment: fixed;
 }
 
 .box {
