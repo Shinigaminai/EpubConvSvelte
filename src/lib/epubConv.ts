@@ -1,6 +1,6 @@
 import { readdirSync, readFileSync, writeFileSync, rm, unlink, readdir } from 'fs';
 import { join } from 'path';
-import { execSync } from 'child_process';
+import { spawnSync } from 'child_process';
 
 export type metadata = {
     author: string;
@@ -42,18 +42,23 @@ function getTargetName(file: File, extension = '.epub') {
     return file.name.replace(/\b\.\w*$/, '') + '.epub';
 }
 
-function createConvCommand(file: File, metadata: metadata) {
+function convertFile(file: File, metadata: metadata) {
     // TODO replace all possible filetypes
     const epubFile = getTargetName(file);
     // TODO sanitize
     const target = join(dirTempPath, file.name);
     const output = join(dirConvertedPath, epubFile);
-    let metadataFlags = metadata.customCover ? `--cover ${tmpCoverPath}` : '';
-    metadataFlags += metadata.author ? `--authors ${metadata.author} ` : '';
-    metadataFlags += metadata.title ? `--title ${metadata.title}` : '';
+    // let metadataFlags = metadata.customCover ? `--cover ${tmpCoverPath}` : '';
+    // metadataFlags += metadata.author ? `--authors "${metadata.author}" ` : '';
+    // metadataFlags += metadata.title ? `--title "${metadata.title}"` : '';
+    let args = [target, output]
+    if (metadata.customCover) { args = args.concat(['--cover', tmpCoverPath]) }
+    if (metadata.author) { args = args.concat(['--authors', metadata.author]) }
+    if (metadata.title) { args = args.concat(['--title', metadata.title]) }
     // --no-default-epub-cover¶
-    // return `flatpak --command="sh" run com.calibre_ebook.calibre -c "ebook-convert \\\"${target}\\\" \\\"${output}\\\" ${metadataFlags}"`;
-    return `ebook-convert "${target}" "${output}" ${metadataFlags}`;
+    // use flatpak only for debugging as it is not sanitized
+    // return spawnSync('flatpak', ['--command="sh"', 'run', 'com.calibre_ebook.calibre', '-c', `ebook-convert "${target}" "${output}" ${metadataFlags}`]);
+    return spawnSync('ebook-convert', args);
 }
 
 export function getConvertedDocuments() {
@@ -75,9 +80,8 @@ export async function convertAndAddDocument(file: File, metadata: metadata, cove
     }
     let tmpFilePath = join(dirTempPath, file.name);
     writeFileSync(tmpFilePath, Buffer.from(await file.arrayBuffer()));
-    let command = createConvCommand(file, metadata);
-    console.log(command);
-    execSync(command);
+    let res = convertFile(file, metadata);
+    if (res.error) { throw res.error }
     clear(dirTempPath);
     rm(tmpCoverPath, () => { });
     console.log(`Converted ${file.name} -> ${getTargetName(file)}`);
