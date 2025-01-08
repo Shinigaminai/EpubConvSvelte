@@ -1,16 +1,16 @@
 <script lang="ts">
 	import { applyAction, enhance } from '$app/forms';
-	import MaterialSymbolsUploadRounded from '~icons/material-symbols/upload-rounded';
-	import LineMdLoadingTwotoneLoop from '~icons/line-md/loading-twotone-loop';
 	import { goto, invalidateAll } from '$app/navigation';
 
+	import LineMdLoadingTwotoneLoop from '~icons/line-md/loading-twotone-loop';
 	import MaterialSymbolsTitle from '~icons/material-symbols/title';
 	import MaterialSymbolsAccountCircle from '~icons/material-symbols/account-circle';
+	import MaterialSymbolsConvertToText from '~icons/material-symbols/convert-to-text';
 
 	import ImageUpload from './imageUpload.svelte';
 	import Help from '$lib/help.svelte';
+	import FileUpload from './fileUpload.svelte';
 
-	const authorizedExtension = ['.doc', '.docx', '.odt', '.pdf', '.rtf'];
 	let loading = $state(false);
 	// let callback: Function = $props();
 </script>
@@ -55,20 +55,13 @@
 			</div>
 		</div>
 	</div>
-	<div class="flex flex-col gap-2 md:flex-row">
-		<input
-			class="block grow"
-			id="file_input"
-			type="file"
-			name="fileToUpload"
-			accept={authorizedExtension.join(',')}
-			required
-		/>
-		<button type="submit" class="form-button flex items-center justify-center">
+	<div class="flex flex-col flex-wrap gap-2 sm:flex-row">
+		<FileUpload></FileUpload>
+		<button type="submit" class="flex items-center justify-center gap-1">
 			{#if loading}
 				<LineMdLoadingTwotoneLoop />
 			{:else}
-				<MaterialSymbolsUploadRounded />
+				<MaterialSymbolsConvertToText></MaterialSymbolsConvertToText>
 			{/if}
 			Konvertieren
 		</button>
