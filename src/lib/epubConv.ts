@@ -53,7 +53,7 @@ function createConvCommand(file: File, metadata: metadata) {
     metadataFlags += metadata.title ? `--title ${metadata.title}` : '';
     // --no-default-epub-cover¶
     // return `flatpak --command="sh" run com.calibre_ebook.calibre -c "ebook-convert \\\"${target}\\\" \\\"${output}\\\" ${metadataFlags}"`;
-    return `ebook-convert "${target}" "${output}"`;
+    return `ebook-convert "${target}" "${output}" ${metadataFlags}`;
 }
 
 export function getConvertedDocuments() {
