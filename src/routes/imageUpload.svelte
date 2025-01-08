@@ -8,6 +8,11 @@
 	let customCover: string;
 
 	function getBase64(image: File) {
+		if (typeof image === 'undefined') {
+			clearImage();
+			return;
+		}
+		console.log('use cover image ' + image.name);
 		const reader = new FileReader();
 		reader.readAsDataURL(image);
 		reader.onload = (e) => {
@@ -18,6 +23,7 @@
 	}
 
 	function clearImage() {
+		console.log('clear cover image');
 		customCover = '';
 		fileInput.value = '';
 	}
@@ -34,24 +40,22 @@
 		bind:files
 		on:change={() => getBase64(files[0])}
 	/>
-	{#if customCover}
-		<button class="upload-btn" on:click={() => clearImage()}>
+	<button class="upload-btn" type="button" on:click={() => fileInput.click()}>
+		{#if customCover}
 			<img id="cover" src={customCover} alt="custom cover" />
-			<div class="edit p-2">
-				<IconDelete></IconDelete>
+			<div class="edit flex h-9 flex-row flex-nowrap items-center gap-1 p-2">
+				<IconUpload /> / <IconDelete />
 			</div>
-		</button>
-	{:else}
-		<button class="upload-btn" on:click={() => fileInput.click()}>
+		{:else}
 			<img id="cover" class="blur-sm brightness-50" src={cover_img} alt="cover" />
 			<div class="absolute inset-0 content-center p-4">
 				Cover automatisch erkennen oder generieren.
 			</div>
-			<div class="edit p-2">
-				<IconUpload></IconUpload>
+			<div class="edit flex h-9 w-9 items-center p-2">
+				<IconUpload />
 			</div>
-		</button>
-	{/if}
+		{/if}
+	</button>
 </div>
 
 <style>

@@ -9,7 +9,7 @@
 <button
 	class="flex grow flex-row flex-nowrap items-center justify-center gap-1"
 	type="button"
-	onclick={() => fileInput.click()}
+	on:click={() => fileInput.click()}
 >
 	<div class="hidden-visible">
 		<input
@@ -24,7 +24,7 @@
 			tabindex="-1"
 		/>
 	</div>
-	<IconUpload></IconUpload>
+	<IconUpload />
 	{#if files && files.length}
 		{#each Array.from(files) as f}
 			<div class="text-wrap">
